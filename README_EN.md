@@ -14,7 +14,7 @@ This repository contains the traces of my work done during my apprenticeship at 
 
 ---
 
-> The main content of this repository is found in the technical documentation, available in the `docs/` folder at the root of the project.
+> The main content of this repository is found in the technical documentation, available in the `docs/` folder at the root of the project. [Click here to access it](./docs/technical_doc.md).
 
 ## Table of Contents
 

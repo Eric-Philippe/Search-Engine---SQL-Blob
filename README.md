@@ -14,7 +14,7 @@ Ce repository contient les traces de mon travail effectué dans le cadre de mon 
 
 ---
 
-> Le contenu principal de ce repository se retrouve dans la documentation technique, disponible dans le dossier `docs/` à la racine du projet.
+> Le contenu principal de ce repository se retrouve dans la documentation technique, disponible dans le dossier `docs/` à la racine du projet. [Cliquez ici pour y accéder](./docs/technical_doc.md).
 
 ## Table des matières
 
