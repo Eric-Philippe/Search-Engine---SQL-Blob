@@ -1,6 +1,6 @@
 # Complex Search Engine
 
-<img src="./img/adp.png" alt="ADP" width="70"/>
+<img src="./res/adp.png" alt="ADP" width="70"/>
 
 ## Introduction
 
