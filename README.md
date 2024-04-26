@@ -12,6 +12,10 @@ Ce repository contient les traces de mon travail effectué dans le cadre de mon 
 
 > The entire README is written in French, but also available in English in the file [README_EN.md](./README_EN.md).
 
+---
+
+> Le contenu principal de ce repository se retrouve dans la documentation technique, disponible dans le dossier `docs/` à la racine du projet.
+
 ## Table des matières
 
 - [Moteur de recherche complexe](#moteur-de-recherche-complexe)

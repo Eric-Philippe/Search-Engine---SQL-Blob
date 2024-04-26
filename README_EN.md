@@ -12,6 +12,10 @@ This repository contains the traces of my work done during my apprenticeship at 
 
 > L'entièreté du README est rédigé en anglais, mais également disponible en français dans le fichier [README.md](./README.md).
 
+---
+
+> The main content of this repository is found in the technical documentation, available in the `docs/` folder at the root of the project.
+
 ## Table of Contents
 
 - [Complex Search Engine](#complex-search-engine)
