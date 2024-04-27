@@ -11,20 +11,20 @@ import javafx.util.Pair;
 import apple.util.rechercherExpression.ContexteRecherche;
 
 /**
- * Classe implémentant le nécessaire afin de recherche de manière efficace dans
- * les textes supposés solutions à l'aide des REGEX.
+ * Classe implï¿½mentant le nï¿½cessaire afin de recherche de maniï¿½re efficace dans
+ * les textes supposï¿½s solutions ï¿½ l'aide des REGEX.
  * 
  * <p>
- * On use ici des regex afin d'implémenter l'utilisation des Jokers définis dans
- * {@link ContexteRecherche} et également éviter une recherche naïve impliquant
- * l'utilisation de boucle naïve
+ * On use ici des regex afin d'implï¿½menter l'utilisation des Jokers dï¿½finis dans
+ * {@link ContexteRecherche} et ï¿½galement ï¿½viter une recherche naï¿½ve impliquant
+ * l'utilisation de boucle naï¿½ve
  * 
  * <pre>
  * for (String word : texte)
  * </pre>
  * 
  * <p>
- * Les résultas sont retournés sous une surcouche sérialisée de la classe
+ * Les rï¿½sultas sont retournï¿½s sous une surcouche sï¿½rialisï¿½e de la classe
  * {@link Pair} de javafx. Voir : {@link PairSolution}
  * 
  * <p>
@@ -32,7 +32,7 @@ import apple.util.rechercherExpression.ContexteRecherche;
  * @author Eric PHILIPPE
  *
  */
-public class ExpressionMatcher {
+public class ExpressionMatcher extends RegexBuilder {
 	public static Pattern getCompiledRegex(List<List<String>> synonyms) {
 		return new RegexBuilder(synonyms).build();
 	}
@@ -95,11 +95,11 @@ public class ExpressionMatcher {
 	 * @return true if the expression is in a comment
 	 */
 	private static boolean isExpressionInComment(String text, int start, int end) {
-		// Construire l'expression régulière pour rechercher un commentaire
-		String regex = "/\\*.*?\\*/"; // correspond à un commentaire délimité par /* et */
+		// Construire l'expression rï¿½guliï¿½re pour rechercher un commentaire
+		String regex = "/\\*.*?\\*/"; // correspond ï¿½ un commentaire dï¿½limitï¿½ par /* et */
 		Pattern pattern = Pattern.compile(regex, Pattern.DOTALL); // DOTALL pour inclure les sauts de ligne dans le .*
 
-		// Vérifier si l'expression est dans un commentaire
+		// Vï¿½rifier si l'expression est dans un commentaire
 		String texteAvantExpression = text.substring(0, start);
 		String texteApresExpression = text.substring(end);
 		String texteAvantCommentaire = pattern.matcher(texteAvantExpression).replaceAll("");
@@ -115,26 +115,26 @@ public class ExpressionMatcher {
 	 * @return the text without the non hyphen dash
 	 */
 	public static String replaceHyphen(String texte) {
-		// Créer une chaîne de caractères vide pour stocker le résultat
+		// Crï¿½er une chaï¿½ne de caractï¿½res vide pour stocker le rï¿½sultat
 		StringBuilder resultat = new StringBuilder();
 
-		// Parcourir chaque caractère du texte
+		// Parcourir chaque caractï¿½re du texte
 		for (int i = 0; i < texte.length(); i++) {
 			char c = texte.charAt(i);
 
-			// Si le caractère est un tiret
+			// Si le caractï¿½re est un tiret
 			if (c == '-') {
-				// Vérifier s'il est isolé (ne pas avoir de tiret avant ni après)
-				boolean estIsolé = true;
+				// Vï¿½rifier s'il est isolï¿½ (ne pas avoir de tiret avant ni aprï¿½s)
+				boolean estIsolï¿½ = true;
 				if (i > 0 && texte.charAt(i - 1) == '-') {
-					estIsolé = false;
+					estIsolï¿½ = false;
 				}
 				if (i < texte.length() - 1 && texte.charAt(i + 1) == '-') {
-					estIsolé = false;
+					estIsolï¿½ = false;
 				}
 
-				// Si le tiret n'est pas isolé, le remplacer par un espace
-				if (!estIsolé) {
+				// Si le tiret n'est pas isolï¿½, le remplacer par un espace
+				if (!estIsolï¿½) {
 					resultat.append(' ');
 				} else {
 					resultat.append('-');
@@ -144,14 +144,14 @@ public class ExpressionMatcher {
 			}
 		}
 
-		// Ajouter des espaces à la fin pour que la longueur de la chaîne soit toujours
-		// la même
+		// Ajouter des espaces ï¿½ la fin pour que la longueur de la chaï¿½ne soit toujours
+		// la mï¿½me
 		int longueurFinale = texte.length();
 		while (resultat.length() < longueurFinale) {
 			resultat.append(' ');
 		}
 
-		// Renvoyer le résultat sous forme de chaîne de caractères
+		// Renvoyer le rï¿½sultat sous forme de chaï¿½ne de caractï¿½res
 		return resultat.toString();
 	}
 

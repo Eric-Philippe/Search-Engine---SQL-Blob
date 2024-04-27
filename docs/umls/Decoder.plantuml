@@ -1,0 +1,77 @@
+@startuml Decoder
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class ConnectionPool {
+  - connections: List<PooledCnx>
+  - INITIAL_POOL_SIZE: int
+  - MAX_POOL_SIZE: int
+  - _sLastStateMsg: String
+  + takeConnection(): PooledCnx?
+  + endConnections(): void
+  - hasChanged(String): boolean
+  # giveBackConnection(PooledCnx): void
+  # finalize(): void
+  - getCountOpenCnx(): int
+  - fillPool(): void
+}
+class Converter {
+  + binaryToInt(byte[], int): int
+  + binaryToString(String): String
+  + byteToString(byte[], int): String
+}
+class Decoder {
+  - rechercheMot: appleRechercheMot
+  - SPACE_EQUIVALENT: Set<String>
+  - lgText: int
+  - textBuilder: TexteEnClairBuilder
+  - texteEnClairCache: Map<String, String>
+  - Z0179_EQUIVALENT: Set<String>
+  - A_CONSTANT: Set<String>
+  - appleMotCache: Map<String, appleMot>
+  + byteText: byte[]
+  + getappleMotCache(): Map<String, appleMot>
+  - addSpaces(Metadata): void
+  - isZ8Word(appleMot): boolean
+  + setappleRechercheMot(ConnectionData, String, String, String, String, String): void
+  + decodeTexte(boolean): String
+  + gettexteEnClairCache(): Map<String, String>
+  + setappleRechercheMotStatic(ConnectionData, String, String, String, String, String): appleRechercheMot
+  - addWord(Metadata, boolean): void
+  - appleMotErrorCase(appleMot): boolean
+  + decodeTexte(): String
+}
+class DecoderMultiple {
+  - appleMotCache: ConcurrentHashMap<String, AppleMot>
+  - NUM_THREADS: int
+  - texteEnClairCache: ConcurrentHashMap<String, String>
+  + getAppleMotCache(): ConcurrentHashMap<String, AppleMot>
+  + decodeMultiple(Map<RegleResultat, byte[]>, ConnectionData, String, String, String, String): TreeMap<RegleResultat, String>
+  + getTexteEnClairCache(): ConcurrentHashMap<String, String>
+}
+class Metadata {
+  ~ origin: String
+  ~ motCode: String
+  ~ codeCalcul: String
+  ~ longMot: int
+  ~ nbBlancs: int
+  + setMotCode(byte[]): Metadata
+  + lineBreakNeeded(): boolean
+  + setMotCode(String): void
+}
+class TexteEnClairBuilder {
+  - texteEnClair: StringBuilder
+  + addLineBreak(): void
+  + addSpace(): void
+  + toString(): String
+  + addText(String): void
+}
+
+Decoder              -[#000082,plain]-^  Converter           
+Decoder              -[#000082,plain]-^  Metadata            
+Decoder              -[#000082,plain]-^  TexteEnClairBuilder 
+DecoderMultiple      -[#000082,plain]-^  ConnectionPool      
+DecoderMultiple      -[#000082,plain]-^  Decoder             
+@enduml

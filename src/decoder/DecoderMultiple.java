@@ -23,14 +23,14 @@ import apple.util.rechercherExpression.RegleResultat;
  * databse too many times making use of the {@link ConcurrentHashMap} allowing
  * to feed the same Map between all the Threads
  * 
- * @note - We can expect 900 règles decoded / seconde with a 6 threads machine.
+ * @note - We can expect 900 rï¿½gles decoded / seconde with a 6 threads machine.
  * 
  * @author Eric PHILIPPE
  *
  */
-public class DecoderMultiple {
+public class DecoderMultiple extends Decoder {
 	/** Total of THREADS available */
-	private static final int NUM_THREADS = AppleProperties.getInt("decoder.NUM_THREADS", 6); // Attention, si on change cette property, il faut redémarrer le serveur pour qu'elle soit relue
+	private static final int NUM_THREADS = AppleProperties.getInt("decoder.NUM_THREADS", 6); // Attention, si on change cette property, il faut redï¿½marrer le serveur pour qu'elle soit relue
 	private ConcurrentHashMap<String, AppleMot> appleMotCache = new ConcurrentHashMap<>();
 	private ConcurrentHashMap<String, String> texteEnClairCache = new ConcurrentHashMap<>();
 
@@ -63,16 +63,16 @@ public class DecoderMultiple {
 
 				@Override
 				public void run() {
-					// Récupération d'une connection dans la pool disponible
+					// Rï¿½cupï¿½ration d'une connection dans la pool disponible
 					try (PooledCnx pcnx=ConnectionPool.takeConnection()){
 						RegleResultat regleResultat = values.getKey();
 						byte[] appleTexteCode = values.getValue();
 
-						// Récupération de la classe de recherche de mot
+						// Rï¿½cupï¿½ration de la classe de recherche de mot
 						AppleRechercheMot rechercheMot = Decoder.setAppleRechercheMotStatic(pcnx.getCnxData(), model, version, project,
 								produit, regleResultat.getClientId());
 
-						// Récupérations des valeurs et lancement du décodeur
+						// Rï¿½cupï¿½rations des valeurs et lancement du dï¿½codeur
 						Decoder decoder = new Decoder(appleTexteCode, rechercheMot, appleMotCache, texteEnClairCache);
 						String texte = decoder.decodeTexte(true);
 						appleMotCache.putAll(decoder.getAppleMotCache());
@@ -87,7 +87,7 @@ public class DecoderMultiple {
 
 		executorService.shutdown();
 		try {
-			// Attend que tous les threads aient terminé avant de renvoyer la TreeMap
+			// Attend que tous les threads aient terminï¿½ avant de renvoyer la TreeMap
 			executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();

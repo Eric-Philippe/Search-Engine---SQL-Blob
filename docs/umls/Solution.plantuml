@@ -1,0 +1,84 @@
+@startuml Solution Extender
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class SolutionTool {
+  + SolutionTool(): 
+  - serialVersionUID: long
+  + isSolution(HashSet<String>, String): boolean
+  + extend(ConnectionData, HashMap<RegleResultat, byte[]>, HashMap<RegleResultat, byte[]>, HashSet<RegleResultat>, HashSet<RegleResultat>, SolutionsContainer): void
+  + isSolution(String[], String): boolean
+  + blowId(String): String[]
+  + toId(String[]): String
+  + decode(ConnectionData, HashMap<RegleResultat, byte[]>, HashMap<RegleResultat, byte[]>, HashSet<RegleResultat>, HashSet<RegleResultat>, SolutionsContainer): void
+}
+class SolutionToolAPPLE {
+  + SolutionToolAPPLE(): 
+  - serialVersionUID: long
+  + decode(ConnectionData, HashMap<RegleResultat, byte[]>, HashMap<RegleResultat, byte[]>, HashSet<RegleResultat>, HashSet<RegleResultat>, SolutionsContainer): void
+  + extend(ConnectionData, HashMap<RegleResultat, byte[]>, HashMap<RegleResultat, byte[]>, HashSet<RegleResultat>, HashSet<RegleResultat>, SolutionsContainer): void
+  - constructReglesIdCotis(ConnectionData, ContexteRecherche, HashSet<RegleResultat>): List<RegleCotisation>
+  + decodeParamCotisAPPLE(ConnectionData, HashSet<RegleResultat>, SolutionsContainer): void
+}
+class SolutionToolPEAR {
+  + SolutionToolPEAR(): 
+  - serialVersionUID: long
+  - constructReglesIdCotis(ConnectionData, ContexteRecherche, HashSet<RegleResultat>): List<RegleCotisation>
+  + extend(ConnectionData, HashMap<RegleResultat, byte[]>, HashMap<RegleResultat, byte[]>, HashSet<RegleResultat>, HashSet<RegleResultat>, SolutionsContainer): void
+  + decodeParamCotisPEAR(ConnectionData, HashSet<RegleResultat>, SolutionsContainer): void
+  + decode(ConnectionData, HashMap<RegleResultat, byte[]>, HashMap<RegleResultat, byte[]>, HashSet<RegleResultat>, HashSet<RegleResultat>, SolutionsContainer): void
+}
+class SolutionsContainer {
+  + SolutionsContainer(ContexteRecherche, ResultatsRecherche): 
+  + resultatsEtendus: ArrayList<RubriqueResultat>
+  # reglesDecoded: ResultatsRecherche
+  - serialVersionUID: long
+  - ctx: ContexteRecherche
+  + getResEtenduFromObjetId(String): RubriqueResultat
+  + getResEtendu(String[]): RubriqueResultat
+  # addRegleToDecoded(RegleResultat, String): void
+  # setResEtendu(RubriqueResultat): void
+  + getRegleDecodee(String[]): ResultatRecherche
+  + getResEtendu(String): RubriqueResultat
+  + getResEtenduFromObjetId(String, String, String): RubriqueResultat
+  + getContexte(): ContexteRecherche
+  + contains(String): boolean
+  + length(): int
+  + getResEtendu(int): RubriqueResultat
+  + getResEtenduCode(String): RubriqueResultat
+}
+class SolutionsProcessor {
+  + SolutionsProcessor(ContexteRecherche, ConnectionData, ResultatsRecherche): 
+  # reglesAPPLEToDecode: HashMap<RegleResultat, byte[]>
+  - resultatsEtendus: ArrayList<RubriqueResultat>
+  # reglesDecoded: ResultatsRecherche
+  - cnx: ConnectionData
+  - serialVersionUID: long
+  # reglesParamCotisAPPLEToDecode: HashSet<RegleResultat>
+  - ctx: ContexteRecherche
+  # reglesPEARToDecode: HashMap<RegleResultat, byte[]>
+  # reglesParamCotisPEARToDecode: HashSet<RegleResultat>
+  + getResEtendu(int): RubriqueResultat
+  + getContexte(): ContexteRecherche
+  - sortRegleAlreadyDecoded(): void
+  # setResEtendu(RubriqueResultat): void
+  - sorts(): void
+  + getRegleDecodee(String[]): ResultatRecherche
+  + getResEtendu(String[]): RubriqueResultat
+  + runExtends(): SolutionsContainer
+  + addRegleToDecode(HashMap<RegleResultat, byte[]>, RegleResultat, byte[]): void
+  + getResEtendu(String): RubriqueResultat
+  + getResEtenduFromObjetId(String, String, String): RubriqueResultat
+  + getConnection(): ConnectionData
+  + getResEtenduCode(String): RubriqueResultat
+  # addRegleToDecoded(RegleResultat, String): void
+  + contains(String): boolean
+  + length(): int
+  + getResEtenduFromObjetId(String): RubriqueResultat
+}
+
+SolutionToolAPPLE   -[#000082,plain]-^  SolutionTool       
+SolutionToolPEAR    -[#000082,plain]-^  SolutionToolAPPLE  
+@enduml

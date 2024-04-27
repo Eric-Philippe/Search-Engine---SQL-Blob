@@ -1,0 +1,102 @@
+@startuml Recherche
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Recherche {
+  + Recherche(ConnectionData, ContexteRecherche): 
+  + Recherche(ScenarioConnexion, ContexteRecherche): 
+  + Recherche(ConnectionData, ScenarioConnexion): 
+  # _ctx: ContexteRecherche
+  # _lstTermesCodes: ArrayList<AppleMotRecherche>
+  # _solutionsNonAnalyzed: TreeMap<RegleResultat, String>
+  # cacheTextEnClair: ConcurrentHashMap<String, String>
+  # _solutionsDecoded: TreeMap<RegleResultat, String>
+  # _dbAccess: DbAccess
+  # cacheAppleMot: ConcurrentHashMap<String, AppleMot>
+  # _inNonAnalyzedRegles: boolean
+  # _solutionsRaw: TreeMap<RegleResultat, byte[]>
+  # _solutionsParamCotis: HashSet<String>
+  # _lstTermesSynonymes: List<List<String>>
+  # _cnx: ConnectionData
+  # _lstTermesCodesExtended: ArrayList<AppleMotRecherche>
+  - serialVersionUID: long
+  # _inParamCotis: boolean
+  # _inComment: boolean
+  + executeQueryHashMap(StringBuilder): HashMap<String, String>
+  + getCacheAppleMot(): ConcurrentHashMap<String, AppleMot>
+  + executeQuery(StringBuilder): HashSet<String>
+  + getCacheTextEnClair(): ConcurrentHashMap<String, String>
+  + executeQuery(String): HashSet<String>
+  + getTotalSolutions(): int
+  + setCacheAppletMot(ConcurrentHashMap<String, AppleMot>): void
+  + start(): ResultatsRecherche
+  - fillUtilisationResultatAPPLE(ResultatsRecherche, ContexteRecherche, String): void
+  + executeQuery(String, ConnectionData): HashSet<String>
+  + setCacheTextEnClair(ConcurrentHashMap<String, String>): void
+  + getSolutions(): ResultatsRecherche
+  - fillUtilisationResultatPEAR(ResultatsRecherche, ContexteRecherche, String): void
+  - init(ConnectionData, ContexteRecherche): void
+  + getNomTableActive(): String
+  + setUtilisation(ContexteRecherche, ResultatsRecherche, ArrayList<AppleMotRecherche>): void
+  + executeQueryList(StringBuilder): List<String>
+}
+enum RechercheInstanceEnum << enumeration >> {
+  + RechercheInstanceEnum(): 
+  + PEAR: 
+  + APPLE: 
+  + values(): RechercheInstanceEnum[]
+  + valueOf(String): RechercheInstanceEnum
+}
+class RechercherExpressionAppleJoker {
+  + RechercherExpressionAppleJoker(ConnectionData, ScenarioConnexion): 
+  + RechercherExpressionAppleJoker(ConnectionData, ContexteRecherche): 
+  - serialVersionUID: long
+  + start(): ResultatsRecherche
+  + getRegleFromSqlQueryJoker(): void
+}
+class RechercherExpressionAppleStrict {
+  + RechercherExpressionAppleStrict(ConnectionData, ContexteRecherche): 
+  + RechercherExpressionAppleStrict(ConnectionData, ScenarioConnexion): 
+  - serialVersionUID: long
+  + getRegleFromSqlQuery(): void
+  + start(): ResultatsRecherche
+  + getNomTableActive(): String
+}
+class RechercherExpressionPearJoker {
+  + RechercherExpressionPearJoker(ConnectionData, ContexteRecherche): 
+  + RechercherExpressionPearJoker(ConnectionData, ContexteRecherche, ResultatsRecherche, ConcurrentHashMap<String, AppleMot>, ConcurrentHashMap<String, String>): 
+  + RechercherExpressionPearJoker(ConnectionData, ScenarioConnexion): 
+  - serialVersionUID: long
+  + start(): ResultatsRecherche
+  + getRegleFromSqlQueryJoker(): void
+}
+class RechercherExpressionPearStrict {
+  + RechercherExpressionPearStrict(ConnectionData, ContexteRecherche): 
+  + RechercherExpressionPearStrict(ConnectionData, ContexteRecherche, ResultatsRecherche, ConcurrentHashMap<String, AppleMot>, ConcurrentHashMap<String, String>): 
+  + RechercherExpressionPearStrict(ConnectionData, ScenarioConnexion): 
+  - solutionsRawBuffer: ConcurrentHashMap<RegleResultat, byte[]>
+  - pastSolutionRecherche: ResultatsRecherche
+  - NUM_THREADS: int
+  - serialVersionUID: long
+  + getSolutions(): ResultatsRecherche
+  - fillRegleFromSqlQueryForClient(ClientProjet): void
+  + getNomTableActive(): String
+  + executeQueryExtended(String): HashSet<String>
+  + getRegleFromSqlQuery(): void
+}
+class RechercherFactory {
+  + RechercherFactory(): 
+  + search(ConnectionData, ContexteRecherche): ResultatsRecherche
+  + getRechercheInstance(RechercheInstanceEnum, ConnectionData, ContexteRecherche, ResultatsRecherche, ConcurrentHashMap<String, AppleMot>, ConcurrentHashMap<String, String>): Recherche?
+  + search(ScenarioConnexion, ContexteRecherche): ResultatsRecherche
+  + getRechercheInstance(RechercheInstanceEnum, ConnectionData, ContexteRecherche): Recherche?
+  + search(ConnectionData, ScenarioConnexion): ResultatsRecherche
+}
+
+RechercherExpressionAppleJoker   -[#000082,plain]-^  RechercherExpressionAppleStrict 
+RechercherExpressionAppleStrict  -[#000082,plain]-^  Recherche                       
+RechercherExpressionPearJoker    -[#000082,plain]-^  RechercherExpressionPearStrict  
+RechercherExpressionPearStrict   -[#000082,plain]-^  RechercherExpressionAppleStrict 
+@enduml

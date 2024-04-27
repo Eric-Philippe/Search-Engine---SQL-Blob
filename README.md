@@ -1,6 +1,6 @@
 # Moteur de recherche complexe
 
-<img src="./res/adp.png" alt="ADP" width="70"/>
+<img src="./res/img/adp.png" alt="ADP" width="70"/>
 
 ## Introduction
 
